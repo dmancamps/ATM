@@ -90,7 +90,8 @@ class CheckingLogic(QMainWindow, Ui_checking_window):
         self.pushButton_exit_checking.clicked.connect(lambda: self.exit())
 
     def update(self):
-        self.label_balance_checking.setText(str(self.checking_balance))
+        formatted_balance_checking = "${:.2f}".format(self.checking_balance)
+        self.label_balance_checking.setText(str(formatted_balance_checking))
 
     def submit(self):
         amount = float(self.lineEdit_dollar_amount_checking.text())
@@ -145,7 +146,8 @@ class SavingsLogic(QMainWindow, Ui_savings_window):
         self.pushButton_exit_savings.clicked.connect(lambda: self.exit())
 
     def update(self):
-        self.label_balance_savings.setText(str(self.savings_balance))
+        formatted_balance_savings = "${:.2f}".format(self.savings_balance)
+        self.label_balance_savings.setText(str(formatted_balance_savings))
 
     def submit(self):
         amount = float(self.lineEdit_dollar_amount_savings.text())
