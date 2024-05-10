@@ -81,11 +81,13 @@ class OptionLogic(QMainWindow, Ui_option_window):
                                                  self.savings_balance, self.reoccurrences)
             self.checking_window.show()
             self.hide()
-        else:
+        elif self.radioButton_savings_option.isChecked():
             self.savings_window = SavingsLogic(self.saved_name, self.saved_pin, self.checking_balance,
                                                self.savings_balance, self.reoccurrences)
             self.savings_window.show()
             self.hide()
+
+        self.label_success_option.setText("Please select an account to access.")
 
 
 class CheckingLogic(QMainWindow, Ui_checking_window):
