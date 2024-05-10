@@ -7,7 +7,10 @@ from ATM.savings import *
 
 class WelcomeLogic(QMainWindow, Ui_welcome_window):
 
-    def __init__(self):
+    def __init__(self) -> None:
+        """
+        Method to initialize the Welcome GUI.
+        """
         super().__init__()
         self.saved_name = None
         self.saved_pin = None
@@ -19,7 +22,10 @@ class WelcomeLogic(QMainWindow, Ui_welcome_window):
 
         self.pushButton_login_welcome.clicked.connect(lambda: self.login())
 
-    def login(self):
+    def login(self) -> None:
+        """
+        Method to allow saved users to login.
+        """
         entered_name = self.lineEdit_name_welcome.text().lower()
         entered_pin = self.lineEdit_pin_welcome.text()
 
@@ -39,7 +45,10 @@ class WelcomeLogic(QMainWindow, Ui_welcome_window):
 
         self.label_welcome_welcome.setText("Credentials are incorrect. Please try again.")
 
-    def open_option_window(self):
+    def open_option_window(self) -> None:
+        """
+        Method to open the second gui once user successfully logs in.
+        """
         self.option_window = OptionLogic(self.saved_name, self.saved_pin, self.checking_balance,
                                          self.savings_balance, self.reoccurrences)
         self.option_window.show()
@@ -47,7 +56,10 @@ class WelcomeLogic(QMainWindow, Ui_welcome_window):
 
 
 class OptionLogic(QMainWindow, Ui_option_window):
-    def __init__(self, saved_name, saved_pin, checking_balance, savings_balance, reoccurrences):
+    def __init__(self, saved_name, saved_pin, checking_balance, savings_balance, reoccurrences) -> None:
+        """
+        Method to initialize the Option GUI.
+        """
         super().__init__()
         self.checking_window = None
         self.savings_window = None
@@ -60,7 +72,10 @@ class OptionLogic(QMainWindow, Ui_option_window):
 
         self.pushButton_option.clicked.connect(self.enter)
 
-    def enter(self):
+    def enter(self) -> None:
+        """
+        Method to open either checking or savings GUI based on user input.
+        """
         if self.radioButton_checking_option.isChecked():
             self.checking_window = CheckingLogic(self.saved_name, self.saved_pin, self.checking_balance,
                                                  self.savings_balance, self.reoccurrences)
@@ -74,7 +89,10 @@ class OptionLogic(QMainWindow, Ui_option_window):
 
 
 class CheckingLogic(QMainWindow, Ui_checking_window):
-    def __init__(self, saved_name, saved_pin, checking_balance, savings_balance, reoccurrences):
+    def __init__(self, saved_name, saved_pin, checking_balance, savings_balance, reoccurrences) -> None:
+        """
+        Method to initialize the Checking GUI.
+        """
         super().__init__()
         self.lineEdit_name_welcome = None
         self.saved_name = saved_name
@@ -89,11 +107,18 @@ class CheckingLogic(QMainWindow, Ui_checking_window):
         self.pushButton_submit_checking.clicked.connect(lambda: self.submit())
         self.pushButton_exit_checking.clicked.connect(lambda: self.exit())
 
-    def update(self):
+    def update(self) -> None:
+        """
+        Method to update the balance in the checking GUI.
+        """
         formatted_balance_checking = "${:.2f}".format(self.checking_balance)
         self.label_balance_checking.setText(str(formatted_balance_checking))
 
-    def submit(self):
+    def submit(self) -> None:
+        """
+        Method to withdraw or deposit currency based on user input.
+        Also updates in saved_accounts file.
+        """
         amount = float(self.lineEdit_dollar_amount_checking.text())
         if self.radioButton_withdraw_checking.isChecked():
             if 0 < amount <= self.checking_balance:
@@ -123,7 +148,10 @@ class CheckingLogic(QMainWindow, Ui_checking_window):
             file.writelines(lines)
         self.update()
 
-    def exit(self):
+    def exit(self) -> None:
+        """
+        Method to close the GUI, and end the program when user desires.
+        """
         self.close()
 
 
@@ -131,7 +159,10 @@ class SavingsLogic(QMainWindow, Ui_savings_window):
     MINIMUM = 100
     RATE = 0.02
 
-    def __init__(self, saved_name, saved_pin, checking_balance, savings_balance, reoccurrences):
+    def __init__(self, saved_name, saved_pin, checking_balance, savings_balance, reoccurrences) -> None:
+        """
+        Method to initialize the savings GUI.
+        """
         super().__init__()
         self.saved_name = saved_name
         self.saved_pin = saved_pin
@@ -145,11 +176,18 @@ class SavingsLogic(QMainWindow, Ui_savings_window):
         self.pushButton_submit_savings.clicked.connect(lambda: self.submit())
         self.pushButton_exit_savings.clicked.connect(lambda: self.exit())
 
-    def update(self):
+    def update(self) -> None:
+        """
+        Method to update the balance in the savings GUI.
+        """
         formatted_balance_savings = "${:.2f}".format(self.savings_balance)
         self.label_balance_savings.setText(str(formatted_balance_savings))
 
-    def submit(self):
+    def submit(self) -> None:
+        """
+        Method to withdraw or deposit currency based on user input.
+        Also updates in saved_accounts file.
+        """
         amount = float(self.lineEdit_dollar_amount_savings.text())
         if self.radioButton_withdraw_savings.isChecked():
             if amount > 0 and (self.savings_balance - amount) >= self.MINIMUM:
@@ -201,5 +239,8 @@ class SavingsLogic(QMainWindow, Ui_savings_window):
             file.writelines(lines)
         self.update()
 
-    def exit(self):
+    def exit(self) -> None:
+        """
+        Method to close the GUI, and end the program when user desires.
+        """
         self.close()
