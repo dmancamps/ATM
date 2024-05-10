@@ -1,8 +1,8 @@
 from PyQt6.QtWidgets import *
 from welcome import *
 from option import *
-from ATM.checking import *
-from ATM.savings import *
+from checking import *
+from savings import *
 
 
 class WelcomeLogic(QMainWindow, Ui_welcome_window):
